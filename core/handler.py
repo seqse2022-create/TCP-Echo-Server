@@ -1,4 +1,5 @@
 import logging
+import socket
 logger = logging.getLogger("logger_both")
 
 
@@ -14,6 +15,9 @@ def 通信循环(客户_套接字,sp,客户_信息):
             if 数据_字节.decode("utf-8") == "dsh":
                 logger.warning(f"用户断开连接{客户_信息}")
                 break
+        except socket.timeout:#用了模块名就要导入
+            logger.warning(f"连接超时 {客户_信息}")#捕获用户超时
+            break
         except Exception as e: 
             logger.warning(f"连接异常 {客户_信息}: {e}")
             break
